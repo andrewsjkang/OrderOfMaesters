@@ -1,0 +1,25 @@
+{
+  "name": "orderofmaesters",
+  "version": "1.0.0",
+  "description": "Event Microservice for BetterSearch",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "server": "nodemon server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewsjkang/OrderOfMaesters.git"
+  },
+  "author": "Andrew Kang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewsjkang/OrderOfMaesters/issues"
+  },
+  "homepage": "https://github.com/andrewsjkang/OrderOfMaesters#readme",
+  "dependencies": {
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0"
+  }
+}
