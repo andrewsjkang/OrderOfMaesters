@@ -7,12 +7,12 @@ CREATE KEYSPACE IF NOT EXISTS maesters
 USE maesters;
 
 CREATE TABLE IF NOT EXISTS logs (
-  type text,
+  bucketId int,
   event text,
   day date,
   time time,
-  video_id int,
-  user_id int,
-  search_id int,
-  PRIMARY KEY ((type, event, day), time)
+  videoId int,
+  userId int,
+  searchId int,
+  PRIMARY KEY ((bucketId, event, day), time)
 ) WITH CLUSTERING ORDER BY (time DESC);
