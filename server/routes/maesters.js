@@ -5,7 +5,15 @@ const cass = require('../cassandra/index');
 router.post('/maesters', async (ctx) => {
   console.log('ctx body:', ctx.request.body);
   var data = ctx.request.body;
-  var params = [data.type, data.event, data.day, data.time, data.video_id, data.user_id, data.search_id];
+  var params = [
+    data.bucketId, 
+    data.event, 
+    data.day, 
+    data.time, 
+    data.videoId, 
+    data.userId, 
+    data.searchId
+  ];
 
   try {
     var result = await cass.insertLog(params);

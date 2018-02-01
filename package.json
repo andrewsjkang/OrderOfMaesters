@@ -20,6 +20,7 @@
   "homepage": "https://github.com/andrewsjkang/OrderOfMaesters#readme",
   "dependencies": {
     "cassandra-driver": "^3.3.0",
+    "faker": "^4.1.0",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.3.0",
