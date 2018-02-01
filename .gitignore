@@ -36,9 +36,5 @@ dist/
 node_modules/
 bower_components/
 
-<<<<<<< HEAD
-# Data Generated files
-=======
 # Data files
->>>>>>> 00ccd2ed2d2824f3da785a301e6501c438c723d7
 dataGen/dataFiles/
