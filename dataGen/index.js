@@ -1,6 +1,15 @@
 const faker = require('faker');
 const fs = require('fs');
-const file = fs.createWriteStream('./dataGen/dataFiles/big10m_05.txt');
+const file = fs.createWriteStream('./dataGen/dataFiles/arty_07.csv');
+
+const zeroFill = (number) => {
+  var zeroFill = '';
+  if (number < 10) {
+    return '0' + number;
+  } else {
+    return '' + number;
+  }
+}
 
 
 //// TXT DATA GENERATOR ////
@@ -9,21 +18,22 @@ const generateDataLine = () => {
   const bucketId = Math.ceil(Math.random() * 2);
 
   // event generator
-  const events = ['start', 'videoStart', 'videoComplete'];
+  const events = ['search', 'videoStart', 'videoComplete'];
   const eIndex = Math.floor(Math.random() * 3);
 
   // date generator
   // const dates = [/*'2018-01-28',*/ '2018-01-29', '2018-01-30', '2018-01-31'];
   // const dIndex = Math.floor(Math.random() * 3);
   const year = '2017';
-  const month = Math.ceil(Math.random() * 3) + 3;
-  const day = Math.ceil(Math.random() * 30);
+  const month = zeroFill(Math.ceil(Math.random() * 3));
+  const day = zeroFill(Math.ceil(Math.random() * 30));
   const date = year + '-' + month + '-' + day;
 
   // time generator
-  const hour = Math.floor(Math.random() * 24);
-  const minutes = Math.floor(Math.random() * 60);
-  const seconds = Math.floor(Math.random() * 60);
+  const hour = zeroFill(Math.floor(Math.random() * 24));
+  const minutes = zeroFill(Math.floor(Math.random() * 60));
+  const seconds = zeroFill(Math.floor(Math.random() * 60));
+  const time = hour + ':' + minutes + ':' + seconds;
 
   // id generators
   const videoId = Math.ceil(Math.random() * 10000000);
@@ -36,8 +46,7 @@ const generateDataLine = () => {
     bucketId,
     events[eIndex],
     // dates[dIndex],
-    date,
-    hour + ':' + minutes + ':' + seconds,
+    date + 'T' + time + 'Z',
     videoId,
     userId,
     searchId
@@ -50,4 +59,4 @@ const writeToFile = (quantity) => {
   }
 }
 
-writeToFile(2000000);
+writeToFile(120000);

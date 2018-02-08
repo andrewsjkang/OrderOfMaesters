@@ -1,34 +1,43 @@
+require('newrelic');
 //// Packages ////
+require('dotenv').config();
 const Koa = require('koa');
 const parser = require('koa-bodyparser');
+/// ADUBS CONFIG ////
+var AWS = require('aws-sdk');
+var credentials = new AWS.SharedIniFileCredentials({profile: 'maesters'});
+AWS.config.credentials = credentials;
+AWS.config.update({region: process.env.AWS_REGION});
 //// Routes ////
 const indexRoutes = require('./routes/index');
-const maestersRoutes = require('./routes/maesters');
-const testRoutes = require('./routes/testQuery');
+
+const maestersHTTPRoutes = require('./routes/maestersHTTP');
+const analysisRoutes = require('./routes/analysis');
 
 const app = new Koa();
 const PORT = process.env.PORT || 1337;
 
-// X-response-time
-app.use(async (ctx, next) => {
-  const start = Date.now();
-  await next();
-  const ms = Date.now() - start;
-  ctx.set('X-Response-Time', `${ms}ms`);
-});
+// // X-response-time
+// app.use(async (ctx, next) => {
+//   const start = Date.now();
+//   await next();
+//   const ms = Date.now() - start;
+//   ctx.set('X-Response-Time', `${ms}ms`);
+// });
 
-// Logger
-app.use(async (ctx, next) => {
-  const start = Date.now();
-  await next();
-  const ms = Date.now() - start;
-  console.log(`${ctx.method} ${ctx.url} \n⤷ Response time is: ${ms}ms`);
-});
+// // Logger
+// app.use(async (ctx, next) => {
+//   const start = Date.now();
+//   await next();
+//   const ms = Date.now() - start;
+//   console.log(`${ctx.method} ${ctx.url} \n⤷ Response time is: ${ms}ms`);
+// });
 
 app.use(parser());
 app.use(indexRoutes.routes());
-app.use(maestersRoutes.routes());
-app.use(testRoutes.routes());
+// app.use(maestersRoutes.routes());
+app.use(maestersHTTPRoutes.routes());
+app.use(analysisRoutes.routes());
 
 const server = app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
