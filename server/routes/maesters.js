@@ -60,33 +60,37 @@ async function getRaven() {
           // console.log("Message Deleted", data);
           console.timeEnd('⚡ delete speed ⚡');
           console.timeEnd('⚡ full speed ⚡');
-          getRaven();
+          setTimeout(getRaven, 0);
+          // getRaven();
         }
       });
     } else if (!data.Messages) {
       console.log('EMPTY');
-      getRaven();
+      setTimeout(getRaven, 0);
+      // getRaven();
     }
   } catch(error) {
     console.error('RECEIVE ERROR', error);
+    setTimeout(getRaven, 0);
   };
 };
-// getRaven();
+getRaven();
 
 
 async function processEvent(data) {
   var dateTime = data.timestamp.slice(0, data.timestamp.length - 1).split('T');
+  var time = dateTime[1].split('+');
 
   var params = [
-    data.bucketId, 
-    data.event, 
+    data.search['bucketId'], 
+    data.type, 
     dateTime[0],
-    dateTime[1],
+    time[0],
     data.videoId, 
     data.userId, 
-    data.searchId
+    data.search['searchId']
   ];
-
+  console.log(params);
   try {
     const logPromise = cass.insertLog(params);
     const countDayPromise = cass.counterDate(params.slice(0, 3));
@@ -103,70 +107,4 @@ async function processEvent(data) {
   } catch (error) {
     console.error(error);
   }
-};
-//// MULTI ////
-// const getRaven = () => {
-//   console.time('⚡ query speed ⚡');
-//   sqs.receiveMessage(params, function(err, data) {
-//     if (err) {
-//       console.log("Receive Error", err);
-//     } else if (data.Messages) {
-//       console.log('RECEIVED MESSAGE', data.Messages);
-//       var parsed = JSON.parse(data.Messages[0].Body);
-//       var logData = [
-//         parsed.bucketId, 
-//         parsed.event, 
-//         parsed.day, 
-//         parsed.time, 
-//         parsed.videoId, 
-//         parsed.userId, 
-//         parsed.searchId
-//       ];
-
-//       cass.insertLog(logData)
-//         .catch(error => console.error('Error Inserting into Log', error))
-//         .then(result => {
-//           var deleteParams = {
-//             QueueUrl: queueURL,
-//             ReceiptHandle: data.Messages[0].ReceiptHandle
-//           };
-//           sqs.deleteMessage(deleteParams, function(err, data) {
-//             if (err) {
-//               console.log("Delete Error", err);
-//             } else {
-//               console.timeEnd('⚡ query speed ⚡');
-//               console.log("Message Deleted", data);
-//               // getRaven();
-//             }
-//           });
-//       });
-//     //// IF NO RAVENS ////
-//     } else if (!data.Messages) {
-//       console.log('EMPTY');
-//       getRaven(); 
-//     }
-//   });
-// };
-// getRaven();
-
-async function removeFromQueue(ReceiptHandle) {
-  console.log('ReceiptHandle', ReceiptHandle);
-  var deleteParams = {
-    QueueUrl: queueURL,
-    ReceiptHandle: ReceiptHandle
-  };
-
-  sqs.deleteMessage(deleteParams, function(error, data) {
-    if (err) {
-      console.log("Delete Error", err);
-    } else {
-      console.timeEnd('⚡ query speed ⚡');
-      console.log("Message Deleted", data);
-      // getRaven();
-    }
-  });
-}
-
-module.exports = {
-  removeFromQueue
 };

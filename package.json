@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node server/index.js",
     "server": "nodemon server/index.js",
-    "test": "./node_modules/mocha/bin/_mocha",
-    "test-cover": "nyc ./node_modules/mocha/bin/_mocha",
+    "test": "nyc ./node_modules/mocha/bin/_mocha",
+    "test-old": "./node_modules/mocha/bin/_mocha",
     "ravens": "nodemon server/sqs/sqs_raven.js"
   },
   "repository": {

@@ -13,18 +13,6 @@ const insertLog = (params) => {
     });
 };
 
-// const testSelect = (params) => {
-//   // console.time('⚡ query speed ⚡');
-//   const query = `SELECT COUNT(*) FROM logs`;
-  
-//   return client.execute(query, params, { prepare: true })
-//             .then(result => {
-//               // console.timeEnd('⚡ query speed ⚡');
-//               console.log(result.rows.length);
-//               return result.rows;
-//             });
-// }
-
 const counterDate = (params) => {
   // console.time('⚡ update date speed ⚡'); 
   const query = `UPDATE count_days \
@@ -113,7 +101,3 @@ module.exports = {
   monthStats,
   yearStats
 }
-
-// const query = 'SELECT name, email FROM users WHERE key = ?';
-// client.execute(query, [ 'someone' ])
-//   .then(result => console.log('User with email %s', result.rows[0].email));

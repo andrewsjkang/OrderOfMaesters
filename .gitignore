@@ -11,6 +11,7 @@ config/test.json
 # Logs
 logs
 *.log
+.nyc_output
 
 # Runtime data
 pids

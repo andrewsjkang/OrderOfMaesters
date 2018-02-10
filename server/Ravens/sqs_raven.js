@@ -18,20 +18,7 @@ const router = new Router();
 var sqs = new AWS.SQS({apiVersion: '2012-11-05'});
 const QueueUrl = "https://sqs.us-west-1.amazonaws.com/736880112034/TheRavens";
 
-// Enqueue Request 
-//  sqs.sendMessage(params, function(err, data) {
-//    if (err) {
-//      console.log("Error", err);
-//    } else {
-//      console.log("Success", data.MessageId);
-//    }
-//  });
 const sendRaven = (params) => {
-  // sqs.sendMessage(params)
-  //   .then(data => {
-  //     console.log("Success", data.MessageId);
-  //     return data.MessageId;
-  //   });
   sqs.sendMessage(params, function(err, data) {
     if (err) {
       console.log("Error", err);
